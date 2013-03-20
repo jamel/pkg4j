@@ -1,0 +1,6 @@
+include "pkg4j-core"
+include "pkg4j-ant"
+include "pkg4j-maven"
+include "pkg4j-gradle"
+
+rootProject.name = "pkg4j"
