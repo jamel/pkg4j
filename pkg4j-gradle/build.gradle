@@ -1,0 +1,6 @@
+dependencies {
+    compile     gradleApi()
+    compile     libs.comonsLang
+    compile     libs.jdeb
+    testCompile libs.junit
+}

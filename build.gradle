@@ -1,20 +1,21 @@
 apply from: "gradle/libraries.gradle"
 
+defaultTasks "clean", "build"
+
 allprojects {
     apply plugin: "idea"
 
-    group = "org.jamel"
+    group = "org.jamel.pkg4j"
     version = "0.0.1-SNAPSHOT"
 
     repositories {
         mavenCentral()
     }
-
-    defaultTask "build"
 }
 
 subprojects {
     apply plugin: "java"
+    apply plugin: "maven"
 
     compileJava.options.encoding = "UTF-8"
 }
