@@ -14,7 +14,7 @@ import org.jamel.pkg4j.gradle.tasks.BuildRpmTask;
 /**
  * @author Sergey Polovko
  */
-public class PkgPlugin implements Plugin<Project> {
+public class Pkg4jPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {

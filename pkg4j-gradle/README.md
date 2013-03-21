@@ -11,11 +11,11 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies { classpath "org.gradle:pkg-plugin:0.0.1" }
+    dependencies { classpath "org.jamel.pkg4j:pkg4j-gradle:0.0.1" }
 }
 
 // Invoke the plugin
-apply plugin: 'pkg'
+apply plugin: 'pkg4j'
 
 version = "1.0.0"
 
