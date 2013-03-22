@@ -28,7 +28,7 @@ If you are using [Maven](http://maven.apache.org) as build tool for your project
 
 ### Gradle dependency
 
-For [Gradle](http://gradle.org) projects it is even simpler. Make shure that your dependency block looks like: 
+For [Gradle](http://gradle.org) projects it is even simpler. Make sure that your dependency block looks like:
 
 ```groovy
 dependencies {
