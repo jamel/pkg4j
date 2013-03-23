@@ -52,3 +52,9 @@ release date=15:00 03.14.2013,version=1.0.0
 release date=14:00 03.01.2013,version=0.0.1
  * initial release
 ```
+
+Then you can use buildDeb task:
+
+```
+    ./gradlew build buidlDeb
+```
