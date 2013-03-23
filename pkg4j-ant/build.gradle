@@ -1,0 +1,6 @@
+modifyPom { pom ->
+    pom.project {
+        name "Pkg4j ant plugin"
+        description "Ant plugin for creating OS specific packages."
+    }
+}

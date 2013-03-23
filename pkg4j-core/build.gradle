@@ -1,0 +1,10 @@
+dependencies {
+    compile libs.bcpg
+}
+
+modifyPom { pom ->
+    pom.project {
+        name "Pkg4j core module"
+        description "Library for creating OS specific packages."
+    }
+}

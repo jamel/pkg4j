@@ -6,3 +6,4 @@ ext {
 libs.junit = "junit:junit:4.7"
 libs.comonsLang = 'commons-lang:commons-lang:2.6'
 libs.jdeb = "org.vafer:jdeb:1.0.1"
+libs.bcpg = "org.bouncycastle:bcpg-jdk15on:1.48"

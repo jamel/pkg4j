@@ -1,6 +1,15 @@
 dependencies {
+    compile     project(':pkg4j-core')
     compile     gradleApi()
     compile     libs.comonsLang
     compile     libs.jdeb
     testCompile libs.junit
 }
+
+modifyPom { pom ->
+    pom.project {
+        name "Pkg4j gradle plugin"
+        description "Gradle plugin for creating OS specific packages."
+    }
+}
+

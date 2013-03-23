@@ -1,0 +1,6 @@
+modifyPom { pom ->
+    pom.project {
+        name "Pkg4j maven plugin"
+        description "Maven plugin for creating OS specific packages."
+    }
+}

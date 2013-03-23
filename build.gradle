@@ -1,3 +1,5 @@
+description = "Pkg4j Project"
+
 apply from: "gradle/libraries.gradle"
 
 defaultTasks "clean", "build"
@@ -6,18 +8,79 @@ allprojects {
     apply plugin: "idea"
 
     group = "org.jamel.pkg4j"
-    version = "0.0.1-SNAPSHOT"
+    version = "0.0.1"
+
+    ext.environment = project.hasProperty("environment") ? environment : "development"
+    version += (environment != "release" ? "-SNAPSHOT" : "")
+
+    ext.isReleaseBuild = false
+    ext.isSnapshotBuild = false
+    ext.isDevBuild = false
+
+    if (hasProperty("environment") && environment == "release") {
+        ext.isReleaseBuild = true
+    } else if (hasProperty("snapshot")) {
+        ext.isSnapshotBuild = true
+    } else {
+        ext.isDevBuild = true
+    }
 
     repositories {
         mavenCentral()
     }
 }
 
-subprojects {
+subprojects { subProject ->
     apply plugin: "java"
     apply plugin: "maven"
+    apply plugin: "signing"
+    apply from: "$rootDir/gradle/pom.gradle"
 
     compileJava.options.encoding = "UTF-8"
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = "javadoc"
+        from docsDir
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = "sources"
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives jar
+        archives javadocJar
+        archives sourcesJar
+    }
+
+    if (isReleaseBuild) {
+        signing { sign configurations.archives }
+    } else {
+        task signArchives { /* do nothing */ }
+    }
+
+    uploadArchives {
+        repositories.mavenDeployer {
+            configuration = configurations.archives
+            uniqueVersion = false
+
+            if (isDevBuild) {
+                repository(url: "file://${System.getProperty('user.home')}/.m2/repository/")
+            } else {
+                if (isReleaseBuild) {
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+                    authentication(userName: sonatypeUsername, password: sonatypePassword)
+                }
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: sonatypeUsername, password: sonatypePassword)
+                }
+            }
+        }
+    }
 }
 
 task wrapper(type: Wrapper) {

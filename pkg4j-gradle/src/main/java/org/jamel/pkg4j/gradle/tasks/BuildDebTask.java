@@ -30,7 +30,7 @@ import org.jamel.pkg4j.gradle.PackageInfo;
 import org.jamel.pkg4j.gradle.convention.CommonPkgConvention;
 import org.jamel.pkg4j.gradle.convention.PkgConvention;
 import org.jamel.pkg4j.gradle.utils.PassphraseProvider;
-import org.jamel.pkg4j.gradle.utils.SigningUtils;
+import org.jamel.pkg4j.SigningUtils;
 import org.vafer.jdeb.Compression;
 import org.vafer.jdeb.Console;
 import org.vafer.jdeb.DataProducer;
