@@ -1,10 +1,5 @@
 package org.jamel.pkg4j;
 
-import java.io.File;
-
-import org.jamel.pkg4j.deb.DebBuilder;
-import org.jamel.pkg4j.rpm.RpmBuilder;
-
 /**
  * @author Sergey Polovko
  */
@@ -127,14 +122,6 @@ public class Package {
 
         public Package build() {
             return new Package(this);
-        }
-
-        public File buildDeb(String directory) {
-            return new DebBuilder(directory).build(build());
-        }
-
-        public File buildRpm(String directory) {
-            return new RpmBuilder(directory).build(build());
         }
     }
 }
