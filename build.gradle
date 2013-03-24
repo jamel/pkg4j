@@ -30,11 +30,11 @@ allprojects {
     }
 }
 
-subprojects { subProject ->
+subprojects {
     apply plugin: "java"
     apply plugin: "maven"
     apply plugin: "signing"
-    apply from: "$rootDir/gradle/pom.gradle"
+    apply from: "${rootDir}/gradle/pom.gradle"
 
     compileJava.options.encoding = "UTF-8"
 
@@ -80,6 +80,11 @@ subprojects { subProject ->
                 }
             }
         }
+    }
+
+    dependencies {
+        compile     libs.slf4j_api
+        testCompile libs.junit
     }
 }
 

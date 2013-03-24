@@ -1,4 +1,4 @@
-package org.jamel.pkg4j;
+package org.jamel.pkg4j.signing;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -1,5 +1,6 @@
 dependencies {
     compile libs.bcpg
+    compile libs.commons_compress
 }
 
 modifyPom { pom ->
