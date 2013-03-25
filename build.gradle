@@ -4,26 +4,23 @@ apply from: "gradle/libraries.gradle"
 
 defaultTasks "clean", "build"
 
+def isReleaseBuild = false
+def isSnapshotBuild = false
+def isDevBuild = false
+
+if (hasProperty("release")) {
+    isReleaseBuild = true
+} else if (hasProperty("snapshot")) {
+    isSnapshotBuild = true
+} else {
+    isDevBuild = true
+}
+
 allprojects {
     apply plugin: "idea"
 
     group = "org.jamel.pkg4j"
-    version = "0.0.1"
-
-    ext.environment = project.hasProperty("environment") ? environment : "development"
-    version += (environment != "release" ? "-SNAPSHOT" : "")
-
-    ext.isReleaseBuild = false
-    ext.isSnapshotBuild = false
-    ext.isDevBuild = false
-
-    if (hasProperty("environment") && environment == "release") {
-        ext.isReleaseBuild = true
-    } else if (hasProperty("snapshot")) {
-        ext.isSnapshotBuild = true
-    } else {
-        ext.isDevBuild = true
-    }
+    version = "0.0.1${isReleaseBuild ? "" : "-SNAPSHOT"}"
 
     repositories {
         mavenCentral()
