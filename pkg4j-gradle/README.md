@@ -11,7 +11,9 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies { classpath "org.jamel.pkg4j:pkg4j-gradle:0.0.1" }
+    dependencies { 
+        classpath "org.jamel.pkg4j:pkg4j-gradle:0.0.2" 
+    }
 }
 
 // Invoke the plugin
