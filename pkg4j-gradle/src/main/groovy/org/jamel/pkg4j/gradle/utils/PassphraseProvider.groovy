@@ -3,7 +3,7 @@ package org.jamel.pkg4j.gradle.utils;
 /**
  * @author Sergey Polovko
  */
-public final class PassphraseProvider {
+class PassphraseProvider {
 
     private static String passphrase;
 
@@ -11,7 +11,7 @@ public final class PassphraseProvider {
     private PassphraseProvider() {
     }
 
-    public static String provide() {
+    def static String provide() {
         if (passphrase == null) {
             return new String(System.console().readPassword("\n%s: ",
                     "You need enter a passphrase to unlock your secret key. Or press ENTER for skip signing"));
@@ -20,7 +20,7 @@ public final class PassphraseProvider {
         return passphrase;
     }
 
-    public static void remember(String passphrase) {
+    def static void remember(String passphrase) {
         PassphraseProvider.passphrase = passphrase;
     }
 }

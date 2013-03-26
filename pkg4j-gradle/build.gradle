@@ -1,3 +1,5 @@
+apply plugin: "groovy"
+
 dependencies {
     compile     project(':pkg4j-core')
     compile     gradleApi()
