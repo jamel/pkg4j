@@ -122,7 +122,8 @@ class PackageInfo {
             }
 
             void create(Map dirOptions, String name) {
-                dirs << [name: name]
+                dirOptions["name"] = name
+                dirs << dirOptions
             }
 
             void pack(Map dirOptions) {
