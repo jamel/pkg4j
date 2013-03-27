@@ -12,7 +12,7 @@ buildscript {
         mavenCentral()
     }
     dependencies { 
-        classpath "org.jamel.pkg4j:pkg4j-gradle:0.0.2" 
+        classpath "org.jamel.pkg4j:pkg4j-gradle:0.0.3" 
     }
 }
 
