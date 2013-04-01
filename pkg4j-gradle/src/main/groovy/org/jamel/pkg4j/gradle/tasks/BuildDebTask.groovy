@@ -45,7 +45,7 @@ class BuildDebTask extends DefaultTask {
     }
 
     private void buildPackage(PackageInfo pkg) {
-        if (!pkg.needBuild) return
+        if (!pkg.needToBuild) return
 
         logger.info("Build package ${pkg.name} with such configuration: ")
         logger.info(pkg.toString())

@@ -1,8 +1,11 @@
 package org.jamel.pkg4j.gradle
 
+import org.apache.commons.lang.NotImplementedException
 import org.apache.commons.lang.StringUtils
 import org.apache.commons.lang.time.DateFormatUtils
 import org.gradle.api.Project
+import org.jamel.pkg4j.ChangeLog
+import org.jamel.pkg4j.Package.Builder
 
 /**
  * @author Sergey Polovko
@@ -10,14 +13,9 @@ import org.gradle.api.Project
 class PackageInfo {
 
     private final Project project
+    private final Builder packageBuilder
 
-    def String name
-    def String author
-    def String description
-    def String section
-    def String changes
-    def String secureRing
-    def String key
+    def needToBuild
 
     def Map<String, Set<String>> namedDepends = [:]
     def Set<String> includeDepends = [] as LinkedHashSet<String>
@@ -32,10 +30,43 @@ class PackageInfo {
 
     PackageInfo(Project project) {
         this.project = project
+        packageBuilder = org.jamel.pkg4j.Package.create()
     }
 
-    def boolean isNeedBuild() {
-        StringUtils.isNotEmpty(name)
+    void setName(String name) {
+        needToBuild = true
+        packageBuilder.name(name)
+    }
+
+    void setAuthor(String author) {
+        packageBuilder.author(author)
+    }
+
+    void setDescription(String description) {
+        packageBuilder.description(description)
+    }
+
+    void setSection(String section) {
+        throw new NotImplementedException()
+    }
+
+    void setChanges(String changes) {
+        if (changes == "git") {
+            packageBuilder.changeLog(ChangeLog.fromGit())
+        } else if (changes == "mercurial") {
+            packageBuilder.changeLog(ChangeLog.fromMercurial())
+        } else if (new File(changes).exists()) {
+            packageBuilder.changeLog(ChangeLog.fromFile(changes))
+        }
+        throw new IllegalArgumentException("Changes must be provided from git, mercurial or plain text file")
+    }
+
+    void setSecureRing(String secureRing) {
+        throw new NotImplementedException()
+    }
+
+    void setKey(String key) {
+        throw new NotImplementedException()
     }
 
     private void assertConfigurationComplete() {
@@ -152,26 +183,5 @@ class PackageInfo {
                 prermCommands << command
             }
         }.with closure
-    }
-
-    @Override
-    def String toString() {
-        return "PackageInfo{\n" +
-                "  project=" + project +
-                ",\n  name='" + name + '\'' +
-                ",\n  author='" + author + '\'' +
-                ",\n  description='" + description + '\'' +
-                ",\n  section='" + section + '\'' +
-                ",\n  changes='" + changes + '\'' +
-                ",\n  secureRing='" + secureRing + '\'' +
-                ",\n  key='" + key + '\'' +
-                ",\n  namedDepends=" + namedDepends +
-                ",\n  includeDepends=" + includeDepends +
-                ",\n  depends=" + depends +
-                ",\n  dirs=" + dirs +
-                ",\n  dirsToPack=" + dirsToPack +
-                ",\n  postinstCommands=" + postinstCommands +
-                ",\n  prermCommands=" + prermCommands +
-                "\n}";
     }
 }
