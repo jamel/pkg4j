@@ -20,7 +20,7 @@ allprojects {
     apply plugin: "idea"
 
     group = "org.jamel.pkg4j"
-    version = "0.0.3${isReleaseBuild ? "" : "-SNAPSHOT"}"
+    version = "0.0.4${isReleaseBuild ? "" : "-SNAPSHOT"}"
 
     repositories {
         mavenCentral()
