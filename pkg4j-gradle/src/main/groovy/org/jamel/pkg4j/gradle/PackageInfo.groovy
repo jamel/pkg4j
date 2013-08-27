@@ -30,6 +30,7 @@ class PackageInfo {
     def List<String> conffiles = []
     def List<String> postinstCommands = []
     def List<String> prermCommands = []
+    def List<String> postrmCommands = []
 
 
     PackageInfo(Project project) {
@@ -73,6 +74,7 @@ class PackageInfo {
             conffiles.addAll commonPkg.conffiles
             postinstCommands.addAll commonPkg.postinstCommands
             prermCommands.addAll(commonPkg.prermCommands)
+            postrmCommands.addAll(commonPkg.postrmCommands)
         }
 
         project.logger.info("depends = ${depends}, commonPkg=${commonPkg}")
@@ -100,7 +102,8 @@ class PackageInfo {
             dirs: dirs,
             conffiles: conffiles,
             postinstCommands: postinstCommands,
-            prermCommands: prermCommands
+            prermCommands: prermCommands,
+            postrmCommands: postrmCommands
         ]
     }
 
@@ -174,6 +177,14 @@ class PackageInfo {
         }.with closure
     }
 
+    def void postrm(Closure closure) {
+        new Object() {
+            void exec(String command) {
+                postrmCommands << command
+            }
+        }.with closure
+    }
+
     @Override
     def String toString() {
         return "PackageInfo{\n" +
@@ -194,6 +205,7 @@ class PackageInfo {
                 ",\n  conffiles=" + conffiles +
                 ",\n  postinstCommands=" + postinstCommands +
                 ",\n  prermCommands=" + prermCommands +
+                ",\n  postrmCommands=" + postrmCommands +
                 "\n}";
     }
 }
