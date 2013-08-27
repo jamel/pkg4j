@@ -71,7 +71,11 @@ class PackageInfo {
 
         project.logger.info("depends = ${depends}, commonPkg=${commonPkg}")
         for (String includeDepend : includeDepends) {
-            depends.addAll(commonPkg.namedDepends[includeDepend])
+            def dependencies = commonPkg.namedDepends[includeDepend]
+            if (dependencies == null) {
+                throw new IllegalStateException("Can't include '" + includeDepend + "' from commonPkg configuration")
+            }
+            depends.addAll(dependencies)
         }
     }
 
