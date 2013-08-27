@@ -33,7 +33,7 @@ class BuildDebTask extends DefaultTask {
     @TaskAction
     def void run() throws Exception {
         def pkg = project.convention.plugins.pkg as PkgConvention
-        def commonPkg = project.rootProject.convention.plugins.commonPkg as CommonPkgConvention
+        def commonPkg = project.convention.plugins.commonPkg as CommonPkgConvention
 
         if (commonPkg != null) {
             logger.info("Common package config is: ")
