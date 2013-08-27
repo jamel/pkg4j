@@ -41,6 +41,7 @@ modifyPom {
             developer {
                 id "jamel"
                 name "Sergey Polovko"
+                url "http://www.jamel.org"
             }
         }
 	}
