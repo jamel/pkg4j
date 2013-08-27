@@ -35,11 +35,18 @@ class BuildDebTask extends DefaultTask {
         def pkg = project.convention.plugins.pkg as PkgConvention
         def commonPkg = project.rootProject.convention.plugins.commonPkg as CommonPkgConvention
 
-        logger.info("Common package config is: ")
-        logger.info(commonPkg.packageInfo.toString())
+        if (commonPkg != null) {
+            logger.info("Common package config is: ")
+            logger.info(commonPkg.packageInfo.toString())
+
+            // merge pkg configuration with commonPkg
+            // pkg have a priority to commonPkg
+            for (PackageInfo packageInfo : pkg.packages) {
+                packageInfo.mergeWithCommon(commonPkg.packageInfo)
+            }
+        }
 
         for (PackageInfo packageInfo : pkg.packages) {
-            packageInfo.mergeWithCommon(commonPkg.packageInfo)
             buildPackage(packageInfo)
         }
     }
