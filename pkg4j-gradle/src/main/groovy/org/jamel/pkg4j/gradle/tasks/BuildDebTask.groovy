@@ -67,6 +67,7 @@ class BuildDebTask extends DefaultTask {
 
         def context = pkg.toContext()
         generateFile("control", context)
+        generateFile("conffiles", context)
         generateFile("postinst", context)
         generateFile("prerm", context)
 
