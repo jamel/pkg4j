@@ -44,6 +44,10 @@ class BuildDebTask extends DefaultTask {
             for (PackageInfo packageInfo : pkg.packages) {
                 packageInfo.mergeWithCommon(commonPkg.packageInfo)
             }
+        } else {
+          for (PackageInfo packageInfo : pkg.packages) {
+            packageInfo.mergeWithCommon(null)
+          }
         }
 
         for (PackageInfo packageInfo : pkg.packages) {

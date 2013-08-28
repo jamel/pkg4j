@@ -56,22 +56,24 @@ class PackageInfo {
     }
 
     def void mergeWithCommon(PackageInfo commonPkg) {
-        author = firstNotEmpty(author, commonPkg.author)
-        description = firstNotEmpty(description, commonPkg.description)
-        section = firstNotEmpty(section, commonPkg.section, "unknown")
-        changes = firstNotEmpty(changes, commonPkg.changes, "src/pkg/changes.txt")
-        secureRing = firstNotEmpty(secureRing, commonPkg.secureRing, "~/.gnupg/secring.gpg")
-        key = firstNotEmpty(key, commonPkg.key)
+        author = firstNotEmpty(author, commonPkg?.author)
+        description = firstNotEmpty(description, commonPkg?.description)
+        section = firstNotEmpty(section, commonPkg?.section, "unknown")
+        changes = firstNotEmpty(changes, commonPkg?.changes, "src/pkg/changes.txt")
+        secureRing = firstNotEmpty(secureRing, commonPkg?.secureRing, "~/.gnupg/secring.gpg")
+        key = firstNotEmpty(key, commonPkg?.key)
 
-        dirs.addAll(commonPkg.dirs)
-        dirsToPack.addAll(commonPkg.dirsToPack)
+        if (commonPkg != null) {
+            dirs.addAll(commonPkg.dirs)
+            dirsToPack.addAll(commonPkg.dirsToPack)
 
-        postinstCommands.addAll commonPkg.postinstCommands
-        prermCommands.addAll(commonPkg.prermCommands)
+            postinstCommands.addAll commonPkg.postinstCommands
+            prermCommands.addAll(commonPkg.prermCommands)
+        }
 
         project.logger.info("depends = ${depends}, commonPkg=${commonPkg}")
         for (String includeDepend : includeDepends) {
-            def dependencies = commonPkg.namedDepends[includeDepend]
+            def dependencies = commonPkg?.namedDepends[includeDepend]
             if (dependencies == null) {
                 throw new IllegalStateException("Can't include '" + includeDepend + "' from commonPkg configuration")
             }
