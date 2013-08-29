@@ -11,8 +11,8 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies { 
-        classpath "org.jamel.pkg4j:pkg4j-gradle:0.0.3" 
+    dependencies {
+        classpath "org.jamel.pkg4j:pkg4j-gradle:0.0.5"
     }
 }
 

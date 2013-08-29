@@ -5,7 +5,7 @@ allprojects {
 
     description = "Pkg4j Project"
     group = "org.jamel.pkg4j"
-    version = "0.0.4"
+    version = "0.0.5"
 }
 
 subprojects {
