@@ -3,7 +3,7 @@ apply plugin: "groovy"
 dependencies {
     compile     project(':pkg4j-core')
     compile     gradleApi()
-    compile     libs.comonsLang
+    compile     libs.commons_lang
     compile     libs.jdeb
 }
 
