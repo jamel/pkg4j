@@ -5,19 +5,19 @@
 ext {
     libs = [
         // testing
-        junit:              "junit:junit:4.7",
+        junit:              "junit:junit:4.11",
 
         // build .deb
         jdeb:               "org.vafer:jdeb:1.0.1",
 
         // signing .changes files
-        bcpg:               "org.bouncycastle:bcpg-jdk15on:1.48",
+        bcpg:               "org.bouncycastle:bcpg-jdk15on:1.49",
 
         // commons
-        commons_lang:       "commons-lang:commons-lang:2.6",
+        commons_lang:       "org.apache.commons:commons-lang3:3.1",
         commons_compress:   "org.apache.commons:commons-compress:1.5",
 
         // logging
-        slf4j_api:          "org.slf4j:slf4j-api:1.7.4"
+        slf4j_api:          "org.slf4j:slf4j-api:1.7.5"
     ]
 }
