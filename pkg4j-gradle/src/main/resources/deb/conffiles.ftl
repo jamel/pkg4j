@@ -1,0 +1,2 @@
+<% conffiles.each { conffile -> %><%= conffile %>
+<% } %>

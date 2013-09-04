@@ -67,8 +67,12 @@ class BuildDebTask extends DefaultTask {
 
         def context = pkg.toContext()
         generateFile("control", context)
+        generateFile("conffiles", context)
         generateFile("postinst", context)
-        generateFile("prerm", context)
+        if (pkg.prermCommands) {
+          generateFile("prerm", context)
+        }
+        generateFile("postrm", context)
 
         DataProducer[] dataProducers = pkg.dirsToPack.collect {dir ->
             def fileSet = new Tar.TarFileSet()

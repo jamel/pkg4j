@@ -58,5 +58,5 @@ release date=14:00 03.01.2013,version=0.0.1
 Then you can use buildDeb task:
 
 ```
-    ./gradlew build buidlDeb
+    ./gradlew build buildDeb
 ```

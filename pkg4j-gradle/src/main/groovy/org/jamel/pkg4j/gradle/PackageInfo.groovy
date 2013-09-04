@@ -14,6 +14,7 @@ class PackageInfo {
     def String name
     def String author
     def String description
+    def String descriptionTitle
     def String section
     def String changes
     def String secureRing
@@ -26,8 +27,10 @@ class PackageInfo {
     def List<Map<String, String>> dirs = []
     def List<Map<String, String>> dirsToPack = []
 
+    def List<String> conffiles = []
     def List<String> postinstCommands = []
     def List<String> prermCommands = []
+    def List<String> postrmCommands = []
 
 
     PackageInfo(Project project) {
@@ -42,6 +45,7 @@ class PackageInfo {
         assert name : "Package name should be specified in a pkg configuration block"
         assert author : "Author should be specified in a pkg configuration block"
         assert description : "Package description should be specified in a pkg configuration block"
+        assert descriptionTitle : "Package descriptionTitle should be specified in a pkg configuration block"
         def changesFile = project.file(changes)
         assert changesFile.exists() : "Changes log file should exists. File path: ${changesFile.path}"
         assert !dirsToPack.isEmpty() : "Dirs to package should be specified in a pkg configuration block with 'pack' keyword"
@@ -67,8 +71,10 @@ class PackageInfo {
             dirs.addAll(commonPkg.dirs)
             dirsToPack.addAll(commonPkg.dirsToPack)
 
+            conffiles.addAll commonPkg.conffiles
             postinstCommands.addAll commonPkg.postinstCommands
             prermCommands.addAll(commonPkg.prermCommands)
+            postrmCommands.addAll(commonPkg.postrmCommands)
         }
 
         project.logger.info("depends = ${depends}, commonPkg=${commonPkg}")
@@ -89,12 +95,15 @@ class PackageInfo {
             version: project.version,
             author: author,
             description: description,
+            descriptionTitle: descriptionTitle,
             section: section,
             time: DateFormatUtils.SMTP_DATETIME_FORMAT.format(new Date()),
             depends: StringUtils.join(depends, ", "),
             dirs: dirs,
+            conffiles: conffiles,
             postinstCommands: postinstCommands,
-            prermCommands: prermCommands
+            prermCommands: prermCommands,
+            postrmCommands: postrmCommands
         ]
     }
 
@@ -144,6 +153,14 @@ class PackageInfo {
         with closure
     }
 
+    def void conffiles(Closure closure) {
+        new Object(){
+            void add(String conffile) {
+                conffiles << conffile
+            }
+        }.with closure
+    }
+
     def void postinst(Closure closure) {
         new Object() {
             void exec(String command) {
@@ -160,12 +177,21 @@ class PackageInfo {
         }.with closure
     }
 
+    def void postrm(Closure closure) {
+        new Object() {
+            void exec(String command) {
+                postrmCommands << command
+            }
+        }.with closure
+    }
+
     @Override
     def String toString() {
         return "PackageInfo{\n" +
                 "  project=" + project +
                 ",\n  name='" + name + '\'' +
                 ",\n  author='" + author + '\'' +
+                ",\n  descriptionTitle='" + descriptionTitle + '\'' +
                 ",\n  description='" + description + '\'' +
                 ",\n  section='" + section + '\'' +
                 ",\n  changes='" + changes + '\'' +
@@ -176,8 +202,10 @@ class PackageInfo {
                 ",\n  depends=" + depends +
                 ",\n  dirs=" + dirs +
                 ",\n  dirsToPack=" + dirsToPack +
+                ",\n  conffiles=" + conffiles +
                 ",\n  postinstCommands=" + postinstCommands +
                 ",\n  prermCommands=" + prermCommands +
+                ",\n  postrmCommands=" + postrmCommands +
                 "\n}";
     }
 }
