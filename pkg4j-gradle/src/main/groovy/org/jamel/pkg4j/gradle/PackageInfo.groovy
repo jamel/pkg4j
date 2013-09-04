@@ -14,7 +14,7 @@ class PackageInfo {
     def String name
     def String author
     def String description
-    def String shortDescription
+    def String descriptionTitle
     def String section
     def String changes
     def String secureRing
@@ -45,7 +45,7 @@ class PackageInfo {
         assert name : "Package name should be specified in a pkg configuration block"
         assert author : "Author should be specified in a pkg configuration block"
         assert description : "Package description should be specified in a pkg configuration block"
-        assert shortDescription : "Package shortDescription should be specified in a pkg configuration block"
+        assert descriptionTitle : "Package descriptionTitle should be specified in a pkg configuration block"
         def changesFile = project.file(changes)
         assert changesFile.exists() : "Changes log file should exists. File path: ${changesFile.path}"
         assert !dirsToPack.isEmpty() : "Dirs to package should be specified in a pkg configuration block with 'pack' keyword"
@@ -95,7 +95,7 @@ class PackageInfo {
             version: project.version,
             author: author,
             description: description,
-            shortDescription: shortDescription,
+            descriptionTitle: descriptionTitle,
             section: section,
             time: DateFormatUtils.SMTP_DATETIME_FORMAT.format(new Date()),
             depends: StringUtils.join(depends, ", "),
@@ -191,7 +191,7 @@ class PackageInfo {
                 "  project=" + project +
                 ",\n  name='" + name + '\'' +
                 ",\n  author='" + author + '\'' +
-                ",\n  shortDescription='" + shortDescription + '\'' +
+                ",\n  descriptionTitle='" + descriptionTitle + '\'' +
                 ",\n  description='" + description + '\'' +
                 ",\n  section='" + section + '\'' +
                 ",\n  changes='" + changes + '\'' +

@@ -9,5 +9,5 @@ Package: ${name}
 Architecture: all
 Distribution: unstable
 Depends: ${depends}
-Description: ${shortDescription}
+Description: ${descriptionTitle}
  ${description}
