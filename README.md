@@ -22,7 +22,7 @@ If you are using [Maven](http://maven.apache.org) as build tool for your project
 <dependency>
     <groupId>org.jamel.pkg4j</groupId>
     <artifactId>pkg4j-core</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
 </dependency>
 ```
 
@@ -32,7 +32,7 @@ For [Gradle](http://gradle.org) projects it is even simpler. Make sure that your
 
 ```groovy
 dependencies {
-   compile "org.jamel.pkg4j:pkg4j-core:0.0.5"
+   compile "org.jamel.pkg4j:pkg4j-core:0.0.6"
    // ... other dependencies
 }
 ```
