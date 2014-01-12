@@ -2,7 +2,7 @@
 
 This plugin wil help you to build OS packages (.deb or .rpm) from Java (or Groovy, or Scala) sources.
 
-# Quick Start
+## Quick Start
 For start using this plugin just include this lines in your [Gradle](http://gradle.org) build script.
 
 ```groovy
@@ -60,7 +60,7 @@ Then you can use buildDeb task:
     ./gradlew clean build buidlDeb
 ```
 
-# Manually created installation scripts
+## Manually created installation scripts
 
 If you need more complex installation scripts or preinst / postrm (which generation is not supported by the plugin) you can write them manually and specify from where to copy them:
 
@@ -74,7 +74,7 @@ pkg {
 }
 ```
 
-# Package with runtime dependencies
+## Package with runtime dependencies
 
 If you want build package which includes all your runtime dependencies you could use this snippet:
 
