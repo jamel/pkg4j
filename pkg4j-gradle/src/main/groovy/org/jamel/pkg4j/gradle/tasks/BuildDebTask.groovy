@@ -1,6 +1,7 @@
 package org.jamel.pkg4j.gradle.tasks
 
 import groovy.text.GStringTemplateEngine
+import org.apache.commons.lang3.StringUtils
 import org.apache.tools.ant.taskdefs.Tar
 import org.bouncycastle.openpgp.PGPException
 import org.bouncycastle.openpgp.PGPPrivateKey
@@ -67,8 +68,17 @@ class BuildDebTask extends DefaultTask {
 
         def context = pkg.toContext()
         generateFile("control", context)
-        generateFile("postinst", context)
-        generateFile("prerm", context)
+
+        def scripts = pkg.debOptions["scripts"] as String
+        if (StringUtils.isNotBlank(scripts)) {
+            copyFile(scripts, "preinst")
+            copyFile(scripts, "postinst")
+            copyFile(scripts, "prerm")
+            copyFile(scripts, "postrm")
+        } else {
+            generateFile("postinst", context)
+            generateFile("prerm", context)
+        }
 
         DataProducer[] dataProducers = pkg.dirsToPack.collect {dir ->
             def fileSet = new Tar.TarFileSet()
@@ -98,6 +108,20 @@ class BuildDebTask extends DefaultTask {
         def template = getClass().getResourceAsStream("/deb/${fileName}.ftl").newReader()
         def content = engine.createTemplate(template).make(context).toString()
         new File(project.buildDir, "debian/${fileName}").text = content
+    }
+
+    def copyFile(String srcDir, String fileName) {
+        logger.info("Copying ${fileName} file...")
+        def srcFile = project.file(new File(srcDir, fileName))
+        if (srcFile.exists()) {
+            def destFile = new File(new File(project.buildDir, "debian"), fileName)
+            if (destFile.exists()) destFile.delete();
+            srcFile.withInputStream {input ->
+                destFile.withOutputStream {out ->
+                    out << input
+                }
+            }
+        }
     }
 
     private PackageDescriptor createDeb(File controlDir, File debFile, Processor processor, DataProducer[] data) {

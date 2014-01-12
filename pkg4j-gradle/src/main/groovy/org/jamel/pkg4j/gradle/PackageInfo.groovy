@@ -29,6 +29,7 @@ class PackageInfo {
     def List<String> postinstCommands = []
     def List<String> prermCommands = []
 
+    def Map<String, Object> debOptions = [:]
 
     PackageInfo(Project project) {
         this.project = project
@@ -84,7 +85,7 @@ class PackageInfo {
     def Map toContext() {
         assertConfigurationComplete()
 
-        [
+        def context = [
             name: name,
             version: project.version,
             author: author,
@@ -92,10 +93,13 @@ class PackageInfo {
             section: section,
             time: DateFormatUtils.SMTP_DATETIME_FORMAT.format(new Date()),
             depends: StringUtils.join(depends, ", "),
-            dirs: dirs,
-            postinstCommands: postinstCommands,
-            prermCommands: prermCommands
+            dirs: dirs
         ]
+
+        context["postinstCommands"] = postinstCommands
+        context["prermCommands"] = prermCommands
+
+        context
     }
 
     def void depends(Closure closure) {
@@ -160,6 +164,14 @@ class PackageInfo {
         }.with closure
     }
 
+    def void deb(Closure closure) {
+        new Object() {
+            void scripts(String scriptsDir) {
+                debOptions["scripts"] = scriptsDir
+            }
+        }.with closure
+    }
+
     @Override
     def String toString() {
         return "PackageInfo{\n" +
@@ -178,6 +190,7 @@ class PackageInfo {
                 ",\n  dirsToPack=" + dirsToPack +
                 ",\n  postinstCommands=" + postinstCommands +
                 ",\n  prermCommands=" + prermCommands +
+                ",\n  debOptions=" + debOptions +
                 "\n}";
     }
 }
