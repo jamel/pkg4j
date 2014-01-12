@@ -28,11 +28,13 @@
         </ul>
       </header>
       <section>
-        <h1>pkg4j</h1>
+        <h1>
+<a name="pkg4j" class="anchor" href="#pkg4j"><span class="octicon octicon-link"></span></a>pkg4j</h1>
 
-<p>Java library for creating OS specific packages.</p>
+<p>Java library for create OS specific packages.</p>
 
-<h2>How to build</h2>
+<h2>
+<a name="how-to-build" class="anchor" href="#how-to-build"><span class="octicon octicon-link"></span></a>How to build</h2>
 
 <p>This project is uses <a href="http://gradle.org">Gradle</a> as the build tool. For build you need clone source code and simply run one command. All magic will happed automatically.</p>
 
@@ -41,65 +43,127 @@ cd pkg4j
 ./gradlew build
 </code></pre>
 
-<h2>Dependencies from your project</h2>
+<h2>
+<a name="dependencies-from-your-project" class="anchor" href="#dependencies-from-your-project"><span class="octicon octicon-link"></span></a>Dependencies from your project</h2>
 
-<h3>Maven dependency</h3>
+<h3>
+<a name="maven-dependency" class="anchor" href="#maven-dependency"><span class="octicon octicon-link"></span></a>Maven dependency</h3>
 
 <p>If you are using <a href="http://maven.apache.org">Maven</a> as build tool for your project, simply add this dependency to your pom.xml.</p>
 
-<div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
+<div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>org.jamel.pkg4j<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>pkg4j-core<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>0.0.3<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.0.6<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
-<h3>Gradle dependency</h3>
+<h3>
+<a name="gradle-dependency" class="anchor" href="#gradle-dependency"><span class="octicon octicon-link"></span></a>Gradle dependency</h3>
 
 <p>For <a href="http://gradle.org">Gradle</a> projects it is even simpler. Make sure that your dependency block looks like:</p>
 
-<div class="highlight"><pre><span class="n">dependencies</span> <span class="o">{</span>
-   <span class="n">compile</span> <span class="s2">"org.jamel.pkg4j:pkg4j-core:0.0.3"</span>
+<div class="highlight highlight-groovy"><pre><span class="n">dependencies</span> <span class="o">{</span>
+   <span class="n">compile</span> <span class="s2">"org.jamel.pkg4j:pkg4j-core:0.0.6"</span>
    <span class="c1">// ... other dependencies</span>
 <span class="o">}</span>
 </pre></div>
 
-<h2>How to use</h2>
+<h1>
+<a name="gradle-packaging-plugin" class="anchor" href="#gradle-packaging-plugin"><span class="octicon octicon-link"></span></a>Gradle packaging plugin</h1>
 
-<p>For build .deb or .rpm packages you have to write simple code like this:</p>
+<p>This plugin wil help you to build OS packages (.deb or .rpm) from Java (or Groovy, or Scala) sources.</p>
 
-<div class="highlight"><pre><span class="c1">// (1) create package information</span>
-<span class="n">Package</span> <span class="n">pkgInfo</span> <span class="o">=</span> <span class="n">Package</span><span class="o">.</span><span class="na">create</span><span class="o">()</span>
-        <span class="o">.</span><span class="na">name</span><span class="o">(</span><span class="s">"supper-app"</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">version</span><span class="o">(</span><span class="s">"0.0.3"</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">author</span><span class="o">(</span><span class="s">"Donald Duck"</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">email</span><span class="o">(</span><span class="s">"the@donald.duck"</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">description</span><span class="o">(</span><span class="s">"My brand new cool app for ducks"</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">dependsOn</span><span class="o">(</span><span class="n">Depends</span><span class="o">.</span><span class="na">many</span><span class="o">()</span>
-                <span class="o">.</span><span class="na">on</span><span class="o">(</span><span class="s">"duck-daemon (&gt;= 0.12.1)"</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">on</span><span class="o">(</span><span class="s">"default-jre"</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">build</span><span class="o">())</span>
-        <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="n">Content</span><span class="o">.</span><span class="na">create</span><span class="o">()</span>
-                <span class="o">.</span><span class="na">pack</span><span class="o">(</span><span class="s">"src/bin"</span><span class="o">,</span> <span class="s">"/usr/local/bin"</span><span class="o">,</span> <span class="mi">0744</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">pack</span><span class="o">(</span><span class="s">"src/etc"</span><span class="o">,</span> <span class="s">"/etc/supper-app"</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">pack</span><span class="o">(</span><span class="s">"target/report.txt"</span><span class="o">,</span> <span class="s">"/var/cache/supper-app"</span><span class="o">,</span> <span class="s">"app-user"</span><span class="o">,</span> <span class="mi">0644</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">build</span><span class="o">())</span>
-        <span class="o">.</span><span class="na">changeLog</span><span class="o">(</span><span class="n">ChangeLog</span><span class="o">.</span><span class="na">fromGit</span><span class="o">())</span>
-        <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<h2>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
 
+<p>For start using this plugin just include this lines in your <a href="http://gradle.org">Gradle</a> build script.</p>
 
-<span class="c1">// (2) build .deb package and GPG signed .changes file</span>
-<span class="n">DebBuilder</span> <span class="n">debBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DebBuilder</span><span class="o">(</span><span class="s">"target/debs"</span><span class="o">);</span>
-<span class="n">File</span> <span class="n">deb</span> <span class="o">=</span> <span class="n">debBuilder</span><span class="o">.</span><span class="na">build</span><span class="o">(</span><span class="n">pkgInfo</span><span class="o">);</span>
-<span class="n">File</span> <span class="n">changes</span> <span class="o">=</span> <span class="n">Signer</span><span class="o">.</span><span class="na">sign</span><span class="o">(</span><span class="n">debBuilder</span><span class="o">.</span><span class="na">buildChanges</span><span class="o">(</span><span class="n">pkgInfo</span><span class="o">));</span>
+<div class="highlight highlight-groovy"><pre><span class="c1">// Pull the plugin from Maven Central</span>
+<span class="n">buildscript</span> <span class="o">{</span>
+    <span class="n">repositories</span> <span class="o">{</span>
+        <span class="n">mavenCentral</span><span class="o">()</span>
+    <span class="o">}</span>
+    <span class="n">dependencies</span> <span class="o">{</span>
+        <span class="n">classpath</span> <span class="s2">"org.jamel.pkg4j:pkg4j-gradle:0.0.6"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
+<span class="c1">// Invoke the plugin</span>
+<span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">'pkg4j'</span>
 
-<span class="c1">// (3) build .rpm package</span>
-<span class="n">RpmBuilder</span> <span class="n">rpmBuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RpmBuilder</span><span class="o">(</span><span class="s">"target/rpms"</span><span class="o">);</span>
-<span class="n">File</span> <span class="n">rpm</span> <span class="o">=</span> <span class="n">rpmBuilder</span><span class="o">.</span><span class="na">build</span><span class="o">(</span><span class="n">pkgInfo</span><span class="o">);</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s2">"1.0.0"</span>
+
+<span class="c1">// Provide information for build package</span>
+<span class="n">pkg</span> <span class="o">{</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"my-supper-app"</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s2">"This is my Supper App."</span>
+    <span class="n">changes</span> <span class="o">=</span> <span class="s2">"src/pkg/changes.txt"</span>
+
+    <span class="n">dirs</span> <span class="o">{</span>
+        <span class="n">create</span> <span class="s2">"/var/cache/supper-app"</span><span class="o">,</span> <span class="nl">owner:</span> <span class="s2">"app-user"</span>
+        <span class="n">pack</span> <span class="nl">dir:</span> <span class="s2">"src/pkg/etc"</span><span class="o">,</span> <span class="nl">prefix:</span> <span class="s2">"/etc"</span><span class="o">,</span> <span class="nl">mode:</span> <span class="s2">"775"</span>
+        <span class="n">pack</span> <span class="nl">dir:</span> <span class="s2">"src/pkg/bin"</span><span class="o">,</span> <span class="nl">prefix:</span> <span class="s2">"/usr/lib/supper-app/bin"</span>
+        <span class="n">pack</span> <span class="nl">dir:</span> <span class="s2">"build/libs"</span><span class="o">,</span>  <span class="nl">prefix:</span> <span class="s2">"/usr/lib/supper-app/libs"</span>
+    <span class="o">}</span>
+
+    <span class="n">depends</span> <span class="o">{</span>
+        <span class="n">on</span> <span class="s2">"openjdk-6-jre | default-jre"</span>
+        <span class="n">on</span> <span class="s2">"postfix (&gt;= 2.7.0)"</span>
+    <span class="o">}</span>
+
+    <span class="c1">// generate installation scripts</span>
+    <span class="n">postinst</span> <span class="o">{</span> <span class="n">exec</span> <span class="s2">"update-rc.d supper-app defaults 90 20"</span> <span class="o">}</span>
+    <span class="n">prerm</span>    <span class="o">{</span> <span class="n">exec</span> <span class="s2">"update-rc.d -f supper-app remove"</span> <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 
-<p>And after run this you will get your packages in target folder.</p>
+<p>In changes.txt you must provide release information. Something like this:</p>
+
+<pre><code>release date=15:00 03.14.2013,version=1.0.0
+ * first stable release
+release date=14:00 03.01.2013,version=0.0.1
+ * initial release
+</code></pre>
+
+<p>Then you can use buildDeb task:</p>
+
+<pre lang="shell"><code>./gradlew clean build buidlDeb
+</code></pre>
+
+<h2>
+<a name="manually-created-installation-scripts" class="anchor" href="#manually-created-installation-scripts"><span class="octicon octicon-link"></span></a>Manually created installation scripts</h2>
+
+<p>If you need more complex installation scripts or preinst / postrm (which generation is not supported by the plugin) you can write them manually and specify from where to copy them:</p>
+
+<div class="highlight highlight-groovy"><pre><span class="n">pkg</span> <span class="o">{</span>
+    <span class="o">...</span>
+
+    <span class="c1">// note that installation scripts (preinst|postinst|prerm|postrm) found in this folder</span>
+    <span class="c1">// will have priority over the scripts generated by plugin</span>
+    <span class="n">deb</span> <span class="o">{</span> <span class="n">scripts</span> <span class="s2">"src/pkg/debian"</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<h2>
+<a name="package-with-runtime-dependencies" class="anchor" href="#package-with-runtime-dependencies"><span class="octicon octicon-link"></span></a>Package with runtime dependencies</h2>
+
+<p>If you want build package which includes all your runtime dependencies you could use this snippet:</p>
+
+<div class="highlight highlight-groovy"><pre><span class="c1">// copy all runtime dependencies to build/libs folder</span>
+<span class="n">task</span> <span class="nf">copyLibs</span><span class="o">(</span><span class="nl">type:</span> <span class="n">Copy</span><span class="o">,</span> <span class="nl">dependsOn:</span> <span class="s2">"build"</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">from</span> <span class="n">configurations</span><span class="o">.</span><span class="na">runtime</span>
+    <span class="n">into</span> <span class="s2">"$buildDir/libs"</span>
+<span class="o">}</span>
+
+<span class="c1">// "deb" is shortcut name of buildDeb which invokes copyLibs before run</span>
+<span class="n">task</span> <span class="nf">deb</span><span class="o">(</span><span class="nl">type:</span> <span class="n">org</span><span class="o">.</span><span class="na">jamel</span><span class="o">.</span><span class="na">pkg4j</span><span class="o">.</span><span class="na">gradle</span><span class="o">.</span><span class="na">tasks</span><span class="o">.</span><span class="na">BuildDebTask</span><span class="o">,</span> <span class="nl">dependsOn:</span> <span class="n">copyLibs</span><span class="o">)</span>
+</pre></div>
+
+<p>Then for build deb package you can run this command:</p>
+
+<pre lang="shell"><code>./gradlew clean deb
+</code></pre>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/jamel">jamel</a></p>
